@@ -36,4 +36,23 @@ features.json  +  AGENTS.md  +  PROGRESS.md  +  CONTEXT.md
 - agent 半成品堆叠、接班断片 → 看 harness（STATUS/PROGRESS）
 - 慢 / 贵 / 爆 context / 怪故障 → 看 CONTEXT.md（暗物质 + cache 表）
 
+## 怎么挂进工作流（写在项目 CLAUDE.md）
+
+CONTEXT.md 不被代码调用——运行时没有任何代码读它（它是给人/agent 看的档案，不进模型上下文）。让 agent 在对的时机读它的纪律，写在**项目级** `CLAUDE.md`，不是全局 `~/.claude/CLAUDE.md`（后者本身会被 `setting_sources` 偷塞，往里加东西是反向操作）：
+
+```markdown
+## 上下文工程纪律
+改 system prompt / 上下文拼装代码前先读 CONTEXT.md，改完回填。
+```
+
+两者分工：
+
+- `CLAUDE.md` → **自动入会**（每次 session 由 Claude Code 加载）→ 它是"调用入口"
+- `CONTEXT.md` → **按需调阅**（靠 CLAUDE.md 写一句话指引才读）→ 它是"档案"
+- 想更强制：加 PreToolUse **hook**，改 `system_prompt` 文件时弹出"先读 CONTEXT.md"
+
+harness-kit 的 `CLAUDE.md` 模板已内置「上下文工程纪律（LLM 项目）」段——用它 scaffold 的项目自动把 CE 挂进工作流。
+
+---
+
 源头方法论：Anthropic harness 系列 + 公众号「橙研所」叙述版。
