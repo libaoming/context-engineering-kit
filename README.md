@@ -134,6 +134,15 @@ context-engineering-kit/
 - 公众号「橙研所」叙述版：《大家都在喊 context engineering，但没人告诉你怎么落地》
 - 姊妹仓库 [harness-kit](https://github.com/libaoming/harness-kit) — CONTEXT.md 是它「四件套的第四件」
 
+## 配套 kit · harness 三件套
+
+context-engineering-kit 管「喂什么进上下文」（CONTEXT.md 7 层审计）。另有两个独立 kit 覆盖另两个维度，由 `harness-init` skill 按需挂载：
+
+- **[harness-kit](https://github.com/libaoming/harness-kit)** — 开发时骨架（L1-L4：进度 / 单一事实源 / 上下文隔离 / 自动化）。
+- **[agent-memory-kit](https://github.com/libaoming/agent-memory-kit)** — 运行时记忆层（记忆四角色：检索注入 + 闭环优化）。
+
+> 一句话分工：**context-kit** 决定喂什么进上下文，**harness-kit** 管开发骨架与接力，**memory-kit** 让 agent 跑起来后记住经验。三者正交，可单用可合用。
+
 ## License
 
 [MIT](LICENSE) © baomingli（橙研所）
