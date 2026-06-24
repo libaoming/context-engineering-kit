@@ -1,0 +1,6 @@
+{
+  "_doc": "金标：每个 fixture 项目里 setting_sources 检查应判的颜色。audit.py --json 的对应 check.status 必须等于此值。",
+  "dirty-agent": "red",
+  "clean-agent": "green",
+  "no-sdk": "na"
+}

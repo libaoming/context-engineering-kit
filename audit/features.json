@@ -1,0 +1,44 @@
+{
+  "project": "ce-audit",
+  "doc": "把 context-engineering-kit 的人肉 audit-checklist 升级成可执行『上下文体检』。定位=设计时/构建时诊断（一次性体检报告），NOT 运行时常驻治理（那是 Sipcode/Conduit 的红海）。线性切片，一个 feature 一个 verify。",
+  "slices": [
+    {
+      "id": "M1",
+      "title": "暗物质检测：setting_sources（首刀）",
+      "features": [
+        {
+          "id": "M1.1",
+          "title": "扫一个项目目录的 .py，识别 claude-agent-sdk setting_sources 暗物质，judge red/green/yellow/na（AST 解析 import，避 docstring 假阳性）",
+          "status": "passing",
+          "verify": "python3 audit/verify.py  # dirty-agent → red PASS"
+        },
+        {
+          "id": "M1.2",
+          "title": "正反 fixture 金标回归：dirty=red / clean=green / no-sdk=na 三色全中",
+          "status": "passing",
+          "verify": "python3 audit/verify.py  # 比对 fixtures/expected/cases.json，全 PASS exit 0"
+        },
+        {
+          "id": "M1.3",
+          "title": "暗物质量级估算：命中 red 时读 ~/.claude/CLAUDE.md 实际体积，粗估每轮偷塞 token（中文不用 len/4）",
+          "status": "passing",
+          "verify": "python3 audit/audit.py audit/fixtures/dirty-agent | grep -E '粗估约 [0-9]+ token'"
+        },
+        {
+          "id": "M1.4",
+          "title": "真实世界验收：扫 ~/claude-sdk-playground，应认出它已显式 setting_sources=[] 判 green",
+          "status": "passing",
+          "verify": "python3 audit/verify.py  # claude-sdk-playground(真实) → green PASS"
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "title": "（未来）扩展更多暗物质检查 + 7 层 token 实测",
+      "features": [
+        {"id": "M2.1", "title": "preset 动态段 / mcp deferred / 框架托管 history 检查项", "status": "todo", "verify": ""},
+        {"id": "M2.2", "title": "接 U7 metrics_logger：跑一轮真机采数补『运行时体检』分支", "status": "todo", "verify": ""}
+      ]
+    }
+  ]
+}
